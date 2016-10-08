@@ -1,2 +1,2 @@
-# vue2-slider
-A slider component
+# vue2-drag
+A vue drag program.
