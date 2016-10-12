@@ -1,31 +1,97 @@
 <template>
 <div>
-  <el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal">
-    <el-menu-item index="1">处理中心</el-menu-item>
-    <el-submenu index="2">
-      <template slot="title">我的工作台</template>
-      <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item>
-    </el-submenu>
-    <el-menu-item index="3">订单管理</el-menu-item>
-  </el-menu>
-  <div class="line"></div>
+  <div class="dragging-area"
+    @mouseup="up">
 
-  <el-button>默认按钮</el-button>
-  <el-button type="primary">主要按钮</el-button>
-  <el-button type="text">文字按钮</el-button>
+    <div class="box draggable"
+      @mousedown="down"
+      @mousemove="move">
+      <span class="rest">Drag</span>
+      <span class="drag">Drop</span>
+      me, baby!
+    </div>
+
+  </div>
 </div>
 </template>
 
 <script>
+
 export default {
-  components: {
-    // Button,
+  data() {
+    return {
+      interactObj: null,
+      canmove: false,
+      dragOffset: {},
+    };
+  },
+
+  methods: {
+    eventToDragInfo() {
+    },
+
+    down(e) {
+      e.preventDefault();
+
+      this.dragOffset = {
+        dx: e.clientX - e.target.offsetLeft,
+        dy: e.clientY - e.target.offsetTop,
+      };
+
+      this.canmove = true;
+      e.target.classList.add('dragging');
+    },
+
+    move(e) {
+      if (this.canmove) {
+        const els = e.target.style;
+        els.left = `${(e.clientX - this.dragOffset.dx)}px`;
+        els.top = `${(e.clientY - this.dragOffset.dy)}px`;
+      }
+    },
+
+    up() {
+      this.canmove = false;
+      this.$el.querySelector('.draggable').classList.remove('dragging');
+    },
   },
 };
 </script>
 
 <style>
 @import url('./assets/css/reset.css');
+
+.dragging-area {
+  width: 100%;
+  height: 100%;
+}
+.box {
+  -webkit-transition: box-shadow 100ms ease;
+  color: white;
+  background: #28f;
+  text-align: center;
+  padding: 1em;
+  box-shadow: 1px 1px 5px #444;
+}
+.draggable {
+  transform: translate3d(0,0,0);
+  cursor: move;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+}
+.dragging {
+  box-shadow: 10px 10px 40px #444;
+}
+.draggable .drag {
+  font-style: italic;
+  font-weight: bold;
+  display: none;
+}
+.dragging .drag {
+  display: inline;
+}
+.dragging .rest {
+  display: none;
+}
 </style>
