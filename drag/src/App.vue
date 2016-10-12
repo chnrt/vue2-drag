@@ -21,15 +21,12 @@ export default {
   data() {
     return {
       interactObj: null,
-      canmove: false,
+      canMove: false,
       dragOffset: {},
     };
   },
 
   methods: {
-    eventToDragInfo() {
-    },
-
     down(e) {
       e.preventDefault();
 
@@ -38,12 +35,12 @@ export default {
         dy: e.clientY - e.target.offsetTop,
       };
 
-      this.canmove = true;
+      this.canMove = true;
       e.target.classList.add('dragging');
     },
 
     move(e) {
-      if (this.canmove) {
+      if (this.canMove) {
         const els = e.target.style;
         els.left = `${(e.clientX - this.dragOffset.dx)}px`;
         els.top = `${(e.clientY - this.dragOffset.dy)}px`;
@@ -51,7 +48,7 @@ export default {
     },
 
     up() {
-      this.canmove = false;
+      this.canMove = false;
       this.$el.querySelector('.draggable').classList.remove('dragging');
     },
   },
