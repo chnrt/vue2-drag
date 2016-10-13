@@ -2,5 +2,5 @@ function makeAction(type) {
   return ({ commit }, payload) => commit(type, payload);
 }
 
-export const addEl = makeAction('ADD_EL');
-export const deleteEl = makeAction('DELETE_EL');
+export const addEL = makeAction('ADD_EL');
+export const deleteEL = makeAction('DELETE_EL');
