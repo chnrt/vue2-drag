@@ -18,6 +18,7 @@ Vue.use(Vuex);
 const state = {
   dragable: true,
   resizable: true,
+  holder: {},
   layouts: [
     { x: 0, y: 0, w: 2, h: 2 },
     { x: 2, y: 0, w: 2, h: 4 },
@@ -55,6 +56,14 @@ const mutations = {
 
   UPDATE_LAYOUT(state, { index, layout }) {
     state.layouts.splice(index, 1, layout);
+  },
+
+  UPDATE_ALL(state, { layouts }) {
+    state.layouts = layouts;
+  },
+
+  UPDATE_HOLDER(state, { holder }) {
+    state.holder = holder;
   },
 };
 

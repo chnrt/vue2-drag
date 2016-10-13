@@ -5,6 +5,7 @@
   @mousedown="down"
   @mousemove="move"
   @mouseup="up"
+  :class="{ 'vue-draggable-dragging': isDraging }"
   :style="style">
 
   <slot></slot>
@@ -54,8 +55,8 @@ export default {
       rowHeight: 30,
       margin: [10, 10],
 
-      canmove: false,
-      isResizable: true,
+      isDraging: false,
+      isResizable: false,
       style: {},
       dragOffset: {},
     };
@@ -112,11 +113,11 @@ export default {
         dy: e.clientY - this.top,
       };
 
-      this.canMove = true;
+      this.isDraging = true;
     },
 
     move(e) {
-      if (this.canMove) {
+      if (this.isDraging) {
         const left = e.clientX - this.dragOffset.dx;
         const top = e.clientY - this.dragOffset.dy;
 
@@ -133,7 +134,7 @@ export default {
     },
 
     up() {
-      this.canMove = false;
+      this.isDraging = false;
     },
 
     ...mapActions([
@@ -151,6 +152,7 @@ export default {
   color: white;
   background: #28f;
   box-shadow: 1px 1px 5px #444;
+  cursor: move;
 }
 .vue-grid-item.cssTransforms {
   transition-property: transform;
@@ -162,6 +164,7 @@ export default {
 
 .vue-grid-item.vue-draggable-dragging {
   /*transition:none;*/
+  box-shadow: 10px 10px 40px #444;
   z-index: 3;
 }
 
