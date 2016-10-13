@@ -114,7 +114,19 @@ export default {
       };
 
       this.isDraging = true;
-      this.updateStatus({ status: true });
+      this.changeStatus({ status: true });
+
+      this.updateHolder({
+        index: this.index,
+        x: this.x,
+        y: this.y,
+        w: this.w,
+        h: this.h,
+        left: this.left,
+        top: this.top,
+        width: this.width,
+        height: this.height,
+      });
     },
 
     move(e) {
@@ -139,7 +151,7 @@ export default {
     },
 
     ...mapActions([
-      'updateStatus',
+      'changeStatus',
       'updateHolder',
       'updateLayout',
     ]),

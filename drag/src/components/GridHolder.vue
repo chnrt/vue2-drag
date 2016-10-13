@@ -13,7 +13,20 @@ export default {
   },
 
   computed: {
-
+    style() {
+      const holder = this.holder;
+      const translate = `translate(${holder.left}px,${holder.top}px)`;
+      return {
+        transform: translate,
+        WebkitTransform: translate,
+        MozTransform: translate,
+        msTransform: translate,
+        OTransform: translate,
+        width: `${holder.width}px`,
+        height: `${holder.height}px`,
+        position: 'absolute',
+      };
+    },
   },
 };
 </script>
