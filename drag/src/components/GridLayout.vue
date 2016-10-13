@@ -3,44 +3,42 @@
 
   <slot></slot>
 
-  <grid-item
-    class="vue-grid-placeholder"
+  <grid-holder
     v-if="isDragging"
-    :x="placeholder.x"
-    :y="placeholder.y"
-    :w="placeholder.w"
-    :h="placeholder.h">
-  </grid-item>
+    :holder="holder">
+  </grid-holder>
 </div>
 </template>
 
 <script>
+import GridHolder from 'components/GridHolder';
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'grid-layout',
 
-  props: {
-
+  components: {
+    GridHolder,
   },
 
   data() {
     return {
       mergedStyle: {},
-      isDragging: false,
-      placeholder: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
     };
   },
 
   computed: {
-
+    ...mapGetters({
+      holder: 'getHolder',
+      isDragging: 'getDragStatus',
+    }),
   },
 
   methods: {
-
+    ...mapActions([
+      'updateStatus',
+      'updateHolder',
+    ]),
   },
 };
 </script>

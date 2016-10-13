@@ -39,6 +39,7 @@ export default {
 
   computed: {
     ...mapGetters({
+      holder: 'getHolder',
       layouts: 'getLayouts',
     }),
   },

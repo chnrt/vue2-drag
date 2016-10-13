@@ -4,4 +4,8 @@ function makeAction(type) {
 
 export const addEL = makeAction('ADD_EL');
 export const deleteEL = makeAction('DELETE_EL');
+
 export const updateLayout = makeAction('UPDATE_LAYOUT');
+
+export const changeStatus = makeAction('CHANGE_STATUS');
+export const updateHolder = makeAction('UPDATE_HOLDER');

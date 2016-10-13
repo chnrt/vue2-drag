@@ -114,6 +114,7 @@ export default {
       };
 
       this.isDraging = true;
+      this.updateStatus({ status: true });
     },
 
     move(e) {
@@ -138,6 +139,8 @@ export default {
     },
 
     ...mapActions([
+      'updateStatus',
+      'updateHolder',
       'updateLayout',
     ]),
   },
@@ -166,18 +169,6 @@ export default {
   /*transition:none;*/
   box-shadow: 10px 10px 40px #444;
   z-index: 3;
-}
-
-.vue-grid-item.vue-grid-placeholder {
-  background: red;
-  opacity: 0.2;
-  transition-duration: 100ms;
-  z-index: 2;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
 }
 
 .vue-grid-item > .vue-resizable-handle {
