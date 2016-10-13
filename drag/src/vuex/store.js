@@ -53,8 +53,8 @@ const mutations = {
     state.layouts.splice(state.layouts.indexOf(layout), 1);
   },
 
-  UPDATE_DATA(state, { layout, config }) {
-    state.layouts.splice(state.layouts.indexOf(layout), 1, config);
+  UPDATE_LAYOUT(state, { index, layout }) {
+    state.layouts.splice(index, 1, layout);
   },
 };
 

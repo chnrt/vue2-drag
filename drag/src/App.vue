@@ -3,8 +3,9 @@
 
   <grid-layout>
 
-    <template v-for="item in layouts">
+    <template v-for="(item, index) in layouts">
       <grid-item
+        :index="index"
         :x="item.x"
         :y="item.y"
         :w="item.w"

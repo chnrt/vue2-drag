@@ -18,10 +18,17 @@
 </template>
 
 <script>
+/* eslint-disable no-mixed-operators */
+import { mapActions } from 'vuex';
+
 export default {
   name: 'grid-item',
 
   props: {
+    index: {
+      type: Number,
+      required: true,
+    },
     x: {
       type: Number,
       required: true,
@@ -55,63 +62,54 @@ export default {
   },
 
   computed: {
-    style() {
-      const pos = this.calcPosition(this.x, this.y, this.w, this.h);
-
-      const style = this.setTransform(pos.top, pos.left, pos.width, pos.height);
-
-      return style;
-    },
-  },
-
-  watch: {
-
-  },
-
-  methods: {
-    calcColWidth() {
+    colWidth() {
       return (this.containerWidth - (this.margin[0] * (this.cols + 1))) / this.cols;
     },
 
-    calcPosition(x, y, w, h) {
-      const colWidth = this.calcColWidth();
-
-      /* eslint-disable no-mixed-operators */
-      return {
-        left: Math.round(colWidth * x + (x + 1) * this.margin[0]),
-        top: Math.round(this.rowHeight * y + (y + 1) * this.margin[1]),
-        // 0 * Infinity === NaN, which causes problems with resize constriants;
-        // Fix this if it occurs.
-        // Note we do it here rather than later because Math.round(Infinity) causes deopt
-        width: w === Infinity
-          ? w
-          : Math.round(colWidth * w + Math.max(0, w - 1) * this.margin[0]),
-        height: h === Infinity
-          ? h
-          : Math.round(this.rowHeight * h + Math.max(0, h - 1) * this.margin[1]),
-      };
+    left() {
+      return Math.round(this.colWidth * this.x + (this.x + 1) * this.margin[0]);
     },
 
-    setTransform(top, left, width, height) {
-      const translate = `translate(${left}px,${top}px)`;
+    top() {
+      return Math.round(this.rowHeight * this.y + (this.y + 1) * this.margin[1]);
+    },
+
+    width() {
+      const w = this.w;
+      return w === Infinity
+          ? w
+          : Math.round(this.colWidth * w + Math.max(0, w - 1) * this.margin[0]);
+    },
+
+    height() {
+      const h = this.h;
+      return h === Infinity
+          ? h
+          : Math.round(this.rowHeight * h + Math.max(0, h - 1) * this.margin[1]);
+    },
+
+    style() {
+      const translate = `translate(${this.left}px,${this.top}px)`;
       return {
         transform: translate,
         WebkitTransform: translate,
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
-        width: `${width}px`,
-        height: `${height}px`,
+        width: `${this.width}px`,
+        height: `${this.height}px`,
         position: 'absolute',
       };
     },
+  },
 
+  methods: {
     down(e) {
       e.preventDefault();
 
       this.dragOffset = {
-        dx: e.clientX - e.target.offsetLeft,
-        dy: e.clientY - e.target.offsetTop,
+        dx: e.clientX - this.left,
+        dy: e.clientY - this.top,
       };
 
       this.canMove = true;
@@ -119,16 +117,28 @@ export default {
 
     move(e) {
       if (this.canMove) {
-        const els = e.target.style;
-        els.left = `${(e.clientX - this.dragOffset.dx)}px`;
-        els.top = `${(e.clientY - this.dragOffset.dy)}px`;
+        const left = e.clientX - this.dragOffset.dx;
+        const top = e.clientY - this.dragOffset.dy;
+
+        this.updateLayout({
+          index: this.index,
+          layout: {
+            x: (left - this.margin[0]) / (this.colWidth + this.margin[0]),
+            y: (top - this.margin[1]) / (this.rowHeight + this.margin[1]),
+            w: this.w,
+            h: this.h,
+          },
+        });
       }
     },
 
     up() {
       this.canMove = false;
-      this.$el.querySelector('.draggable').classList.remove('dragging');
     },
+
+    ...mapActions([
+      'updateLayout',
+    ]),
   },
 };
 </script>
