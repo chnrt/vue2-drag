@@ -117,15 +117,17 @@ export default {
       this.changeStatus({ status: true });
 
       this.updateHolder({
-        index: this.index,
-        x: this.x,
-        y: this.y,
-        w: this.w,
-        h: this.h,
-        left: this.left,
-        top: this.top,
-        width: this.width,
-        height: this.height,
+        holder: {
+          index: this.index,
+          x: this.x,
+          y: this.y,
+          w: this.w,
+          h: this.h,
+          left: this.left,
+          top: this.top,
+          width: this.width,
+          height: this.height,
+        },
       });
     },
 

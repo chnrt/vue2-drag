@@ -1,7 +1,5 @@
 <template>
-<div class="vue-grid-placeholder">
-  
-</div>
+  <div class="vue-grid-placeholder" :style="style"></div>
 </template>
 
 <script>
@@ -36,7 +34,6 @@ export default {
   background: red;
   opacity: 0.2;
   transition-duration: 100ms;
-  z-index: 2;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

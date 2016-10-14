@@ -1,12 +1,16 @@
 <template>
-<div class="vue-grid-layout" :style="mergedStyle">
-
-  <slot></slot>
+<div
+  class="vue-grid-layout"
+  :style="mergedStyle"
+  @mouseup="up">
 
   <grid-holder
     v-if="isDragging"
     :holder="holder">
   </grid-holder>
+
+  <slot></slot>
+
 </div>
 </template>
 
@@ -35,8 +39,12 @@ export default {
   },
 
   methods: {
+    up() {
+      this.changeStatus({ status: false });
+    },
+
     ...mapActions([
-      'updateStatus',
+      'changeStatus',
       'updateHolder',
     ]),
   },
