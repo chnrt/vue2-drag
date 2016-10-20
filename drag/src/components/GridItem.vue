@@ -20,7 +20,8 @@
 
 <script>
 /* eslint-disable no-mixed-operators */
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { compact, moveElement } from '../api/utils';
 
 export default {
   name: 'grid-item',
@@ -54,6 +55,7 @@ export default {
       containerWidth: 100,
       rowHeight: 30,
       margin: [10, 10],
+      maxRows: 999,
 
       isDraging: false,
       isResizable: false,
@@ -102,6 +104,11 @@ export default {
         position: 'absolute',
       };
     },
+
+    ...mapGetters({
+      holder: 'getHolder',
+      layouts: 'getLayouts',
+    }),
   },
 
   methods: {
@@ -136,26 +143,66 @@ export default {
         const left = e.clientX - this.dragOffset.dx;
         const top = e.clientY - this.dragOffset.dy;
 
-        this.updateLayout({
-          index: this.index,
-          layout: {
-            x: (left - this.margin[0]) / (this.colWidth + this.margin[0]),
-            y: (top - this.margin[1]) / (this.rowHeight + this.margin[1]),
-            w: this.w,
-            h: this.h,
+        const pos = this.calcXY(top, left);
+        const layouts = this.layouts;
+        const newLayouts = moveElement(layouts, layouts[this.index], pos.x, pos.y, true);
+        compact(newLayouts, true);
+
+        const holder = newLayouts[this.index];
+        this.updateHolder({
+          holder: {
+            index: this.index,
+            x: holder.x,
+            y: holder.y,
+            w: holder.w,
+            h: holder.h,
+            left: Math.round(this.colWidth * holder.x + (holder.x + 1) * this.margin[0]),
+            top: Math.round(this.rowHeight * holder.y + (holder.y + 1) * this.margin[1]),
+            width: this.width,
+            height: this.height,
           },
         });
+
+        newLayouts[this.index] = {
+          x: (left - this.margin[0]) / (this.colWidth + this.margin[0]),
+          y: (top - this.margin[1]) / (this.rowHeight + this.margin[1]),
+          w: this.w,
+          h: this.h,
+        };
+
+        this.updateAll({ layouts: newLayouts });
       }
     },
 
     up() {
       this.isDraging = false;
+      this.updateLayout({
+        index: this.index,
+        layout: {
+          x: this.holder.x,
+          y: this.holder.y,
+          w: this.holder.w,
+          h: this.holder.h,
+        },
+      });
+    },
+
+    calcXY(top, left) {
+      let x = Math.round((left - this.margin[0]) / (this.colWidth + this.margin[0]));
+      let y = Math.round((top - this.margin[1]) / (this.rowHeight + this.margin[1]));
+
+        // Capping
+      x = Math.max(x, 0);
+      y = Math.max(y, 0);
+
+      return { x, y };
     },
 
     ...mapActions([
       'changeStatus',
       'updateHolder',
       'updateLayout',
+      'updateAll',
     ]),
   },
 };
