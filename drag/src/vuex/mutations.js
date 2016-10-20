@@ -14,34 +14,32 @@ export const state = {
   isDragging: false,
   holder: { x: 0, y: 0, w: 0, h: 0 },
   layouts: [
-    { x: 0, y: 0, w: 2, h: 2 },
-    { x: 2, y: 0, w: 2, h: 4 },
-    { x: 4, y: 0, w: 2, h: 5 },
-    { x: 6, y: 0, w: 2, h: 3 },
-    { x: 8, y: 0, w: 2, h: 3 },
-    { x: 10, y: 0, w: 2, h: 3 },
-    { x: 0, y: 2, w: 2, h: 5 },
-    { x: 2, y: 4, w: 2, h: 5 },
-    { x: 4, y: 5, w: 2, h: 5 },
-    { x: 6, y: 3, w: 2, h: 4 },
-    { x: 8, y: 3, w: 2, h: 4 },
-    { x: 10, y: 3, w: 2, h: 4 },
-    { x: 0, y: 7, w: 2, h: 5 },
-    { x: 2, y: 9, w: 2, h: 5 },
-    { x: 4, y: 10, w: 2, h: 4 },
-    { x: 6, y: 7, w: 2, h: 4 },
-    { x: 8, y: 7, w: 2, h: 5 },
-    { x: 10, y: 7, w: 2, h: 2 },
-    { x: 0, y: 12, w: 2, h: 3 },
-    { x: 6, y: 11, w: 2, h: 2 },
+    // { x: 0, y: 0, w: 2, h: 2 },
+    // { x: 2, y: 0, w: 2, h: 4 },
+    // { x: 4, y: 0, w: 2, h: 5 },
+    // { x: 6, y: 0, w: 2, h: 3 },
+    // { x: 8, y: 0, w: 2, h: 3 },
+    // { x: 10, y: 0, w: 2, h: 3 },
+    // { x: 0, y: 2, w: 2, h: 5 },
+    // { x: 2, y: 4, w: 2, h: 5 },
+    // { x: 4, y: 5, w: 2, h: 5 },
+    // { x: 6, y: 3, w: 2, h: 4 },
+    // { x: 8, y: 3, w: 2, h: 4 },
+    // { x: 10, y: 3, w: 2, h: 4 },
+    // { x: 0, y: 7, w: 2, h: 5 },
+    // { x: 2, y: 9, w: 2, h: 5 },
+    // { x: 4, y: 10, w: 2, h: 4 },
+    // { x: 6, y: 7, w: 2, h: 4 },
+    // { x: 8, y: 7, w: 2, h: 5 },
+    // { x: 10, y: 7, w: 2, h: 2 },
+    // { x: 0, y: 12, w: 2, h: 3 },
+    // { x: 6, y: 11, w: 2, h: 2 },
   ],
 };
 
 export const mutations = {
-  ADD_EL(state, { config }) {
-    state.layouts.push({
-      config,
-    });
+  ADD_EL(state, { layout }) {
+    state.layouts.push(layout);
   },
 
   DELETE_EL(state, { layout }) {

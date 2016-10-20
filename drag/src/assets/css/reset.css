@@ -24,16 +24,10 @@ ul,
 ol,
 dl,
 address {
-  margin: 1em 0;
+  /* margin: 1em 0; */
   padding: 0;
 }
-/* Apply left margin:
-   Only to the few elements that need it: */
-li,
-dd,
-blockquote {
-  margin-left: 1em;
-}
+
 /* Miscellaneous conveniences: */
 form label {
   cursor: pointer;
