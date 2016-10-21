@@ -11,6 +11,9 @@
   <slot></slot>
 
   <span
+    @mousedown="resizeDown"
+    @mousemove="resizeMove"
+    @mouseup="resizeUp"
     v-if="isResizable"
     class="vue-resizable-handle">
   </span>
@@ -58,7 +61,8 @@ export default {
       maxRows: 999,
 
       isDraging: false,
-      isResizable: false,
+      isResizing: false,
+      isResizable: true,
       style: {},
       dragOffset: {},
     };
@@ -185,6 +189,38 @@ export default {
           h: this.holder.h,
         },
       });
+    },
+
+    resizeDown(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.dragOffset = {
+        dx: e.clientX - this.left,
+        dy: e.clientY - this.top,
+      };
+
+      this.isResizing = true;
+      this.changeStatus({ status: true });
+
+      this.updateHolder({
+        holder: {
+          index: this.index,
+          x: this.x,
+          y: this.y,
+          w: this.w,
+          h: this.h,
+          left: this.left,
+          top: this.top,
+          width: this.width,
+          height: this.height,
+        },
+      });
+    },
+    resizeMove() {
+
+    },
+    resizeUp() {
+
     },
 
     calcXY(top, left) {
