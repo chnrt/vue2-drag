@@ -1,10 +1,5 @@
 <template>
 <div>
-<!--   <el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal">
-  <el-menu-item index="1">处理中心</el-menu-item>
-  <el-menu-item index="3">订单管理</el-menu-item>
-</el-menu> -->
-
   <div class="page-container">
     <el-row>
       <el-col :span="4">
@@ -40,7 +35,9 @@
               :y="item.y"
               :w="item.w"
               :h="item.h">
-              <div>{{index}}</div>
+
+              <test-content :content="item.i"></test-content>
+
             </grid-item>
           </template>
 
@@ -53,9 +50,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 import GridLayout from 'components/GridLayout';
 import GridItem from 'components/GridItem';
-import { mapGetters, mapActions } from 'vuex';
+import TestContent from 'components/TestContent';
 
 export default {
   name: 'app',
@@ -63,6 +62,7 @@ export default {
   components: {
     GridLayout,
     GridItem,
+    TestContent,
   },
 
   data() {
@@ -88,7 +88,7 @@ export default {
       });
 
       this.addEL({
-        layout: { x: 0, y, w: Math.min(2, index), h: Math.max(3, index) },
+        layout: { x: 0, y, w: Math.min(2, index), h: Math.max(3, index), i: index },
       });
     },
 

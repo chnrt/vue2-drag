@@ -168,6 +168,7 @@ export default {
           y: (top - this.margin[1]) / (this.rowHeight + this.margin[1]),
           w: this.w,
           h: this.h,
+          i: newLayouts[this.index].i,
         };
 
         this.updateAll({ layouts: newLayouts });
@@ -183,6 +184,7 @@ export default {
           y: this.holder.y,
           w: this.holder.w,
           h: this.holder.h,
+          i: this.layouts[this.index].i,
         },
       });
     },
