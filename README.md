@@ -1,2 +1,2 @@
 # vue2-drag
-dragable grid layouts
+draggable grid layouts
