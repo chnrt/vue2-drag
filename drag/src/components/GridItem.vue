@@ -163,6 +163,19 @@ export default {
       });
     },
 
+    end() {
+      this.updateLayout({
+        index: this.index,
+        layout: {
+          x: this.holder.x,
+          y: this.holder.y,
+          w: this.holder.w,
+          h: this.holder.h,
+          i: this.layouts[this.index].i,
+        },
+      });
+    },
+
     resizeStart(e) {
       this.start(e);
       this.isResizing = true;
@@ -176,16 +189,19 @@ export default {
         this.dragOffset.cy = e.clientY;
 
         const layouts = [].concat(this.layouts);
+        const w = Math.max(0, Math.round(this.w + (gw / this.colWidth)));
+        const h = Math.max(0, Math.round(this.h + (gh / this.rowHeight)));
 
-        const holder = layouts[this.index] = {
+        const holder = layouts[this.index] = { x: this.x, y: this.y, w, h };
+        compact(layouts, true);
+
+        layouts[this.index] = {
           x: this.x,
           y: this.y,
-          w: this.w + (gw / this.colWidth),
-          h: this.h + (gh / this.rowHeight),
+          w: Math.max(0, this.w + (gw / this.colWidth)),
+          h: Math.max(0, this.h + (gh / this.rowHeight)),
           i: layouts[this.index].i,
         };
-
-        compact(layouts, true);
 
         this.updateHolder({
           holder: {
@@ -204,8 +220,10 @@ export default {
         this.updateAll({ layouts });
       }
     },
+
     resizeEnd() {
       this.resizing = false;
+      this.end();
     },
 
     dragStart(e) {
@@ -254,16 +272,7 @@ export default {
 
     dragEnd() {
       this.isDraging = false;
-      this.updateLayout({
-        index: this.index,
-        layout: {
-          x: this.holder.x,
-          y: this.holder.y,
-          w: this.holder.w,
-          h: this.holder.h,
-          i: this.layouts[this.index].i,
-        },
-      });
+      this.end();
     },
 
     calcXY(top, left) {
