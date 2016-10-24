@@ -1,10 +1,8 @@
 <template>
 
 <div
+  ref="item"
   class="vue-grid-item"
-  @mousedown="down"
-  @mousemove="move"
-  @mouseup="up"
   :class="{ 'vue-draggable-dragging': isDraging }"
   :style="style">
 
@@ -20,6 +18,7 @@
 
 <script>
 /* eslint-disable no-mixed-operators */
+import interact from 'interact.js';
 import { mapGetters, mapActions } from 'vuex';
 import { compact, moveElement } from '../api/utils';
 
@@ -111,16 +110,42 @@ export default {
     }),
   },
 
-  methods: {
-    down(e) {
-      e.preventDefault();
+  mounted() {
+    interact(this.$refs.item)
+      .draggable({})
+      .resizable({
+        preserveAspectRatio: false,
+        edges: { left: false, right: true, bottom: true, top: false },
+      })
+      .on('resizestart', (event) => {
+        this.resizeStart(event);
+      })
+      .on('resizemove', (event) => {
+        this.resizeMove(event);
+      })
+      .on('resizeend', (event) => {
+        this.resizeEnd(event);
+      })
+      .on('dragstart', (event) => {
+        this.dragStart(event);
+      })
+      .on('dragmove', (event) => {
+        this.dragMove(event);
+      })
+      .on('dragend', (event) => {
+        this.dragEnd(event);
+      });
+  },
 
+  methods: {
+    start(e) {
       this.dragOffset = {
         dx: e.clientX - this.left,
         dy: e.clientY - this.top,
+        cx: e.clientX,
+        cy: e.clientY,
       };
 
-      this.isDraging = true;
       this.changeStatus({ status: true });
 
       this.updateHolder({
@@ -138,7 +163,59 @@ export default {
       });
     },
 
-    move(e) {
+    resizeStart(e) {
+      this.start(e);
+      this.isResizing = true;
+    },
+
+    resizeMove(e) {
+      if (this.isResizing) {
+        const gw = e.clientX - this.dragOffset.cx;
+        const gh = e.clientY - this.dragOffset.cy;
+        this.dragOffset.cx = e.clientX;
+        this.dragOffset.cy = e.clientY;
+
+        const layouts = [].concat(this.layouts);
+
+        const holder = layouts[this.index] = {
+          x: this.x,
+          y: this.y,
+          w: this.w + (gw / this.colWidth),
+          h: this.h + (gh / this.rowHeight),
+          i: layouts[this.index].i,
+        };
+
+        compact(layouts, true);
+
+        this.updateHolder({
+          holder: {
+            index: this.index,
+            x: holder.x,
+            y: holder.y,
+            w: holder.w,
+            h: holder.h,
+            left: this.left,
+            top: this.top,
+            width: this.width,
+            height: this.height,
+          },
+        });
+
+        this.updateAll({ layouts });
+      }
+    },
+    resizeEnd() {
+      this.resizing = false;
+    },
+
+    dragStart(e) {
+      e.preventDefault();
+      this.start(e);
+
+      this.isDraging = true;
+    },
+
+    dragMove(e) {
       if (this.isDraging) {
         const left = e.clientX - this.dragOffset.dx;
         const top = e.clientY - this.dragOffset.dy;
@@ -175,7 +252,7 @@ export default {
       }
     },
 
-    up() {
+    dragEnd() {
       this.isDraging = false;
       this.updateLayout({
         index: this.index,
@@ -218,7 +295,7 @@ export default {
   color: white;
   background: #28f;
   box-shadow: 1px 1px 5px #444;
-  cursor: move;
+  /* cursor: move; */
 }
 .vue-grid-item.cssTransforms {
   transition-property: transform;
