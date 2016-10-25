@@ -201,8 +201,8 @@ export default {
         this.dragOffset.cy = e.clientY;
 
         const layouts = [].concat(this.layouts);
-        const w = Math.max(0, Math.round(this.w + (gw / this.colWidth)));
-        const h = Math.max(0, Math.round(this.h + (gh / this.rowHeight)));
+        const w = Math.max(1, Math.round(this.w + (gw / this.colWidth)));
+        const h = Math.max(1, Math.round(this.h + (gh / this.rowHeight)));
 
         const holder = layouts[this.index] =
           { x: this.x, y: this.y, w, h, i: layouts[this.index].i };
