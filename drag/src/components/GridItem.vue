@@ -280,7 +280,7 @@ export default {
       let x = Math.round((left - this.margin[0]) / (this.colWidth + this.margin[0]));
       let y = Math.round((top - this.margin[1]) / (this.rowHeight + this.margin[1]));
 
-        // Capping
+      // Capping
       x = Math.max(x, 0);
       y = Math.max(y, 0);
 
