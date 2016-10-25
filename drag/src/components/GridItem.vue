@@ -46,20 +46,30 @@ export default {
       type: Number,
       required: true,
     },
+    containerWidth: {
+      type: Number,
+      default: 100,
+    },
+    rowHeight: {
+      type: Number,
+      default: 30,
+    },
+    margin: {
+      type: Array,
+      default: [10, 10],
+    },
   },
 
   data() {
     return {
       cols: 1,
-      containerWidth: 100,
-      rowHeight: 30,
-      margin: [10, 10],
       maxRows: 999,
+      isResizable: true,
+
+      dragOffset: {},
 
       isDraging: false,
-      isResizable: false,
-      style: {},
-      dragOffset: {},
+      isResizing: false,
     };
   },
 
