@@ -56,7 +56,9 @@ export default {
     },
     margin: {
       type: Array,
-      default: [10, 10],
+      default() {
+        return [10, 10];
+      },
     },
   },
 

@@ -25,13 +25,13 @@ export default {
     GridHolder,
   },
 
-  data() {
-    return {
-      mergedStyle: {},
-    };
-  },
-
   computed: {
+    mergedStyle() {
+      return {
+
+      };
+    },
+
     ...mapGetters({
       holder: 'getHolder',
       isDragging: 'getDragStatus',

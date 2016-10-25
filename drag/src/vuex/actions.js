@@ -10,3 +10,5 @@ export const updateAll = makeAction('UPDATE_ALL');
 
 export const changeStatus = makeAction('CHANGE_STATUS');
 export const updateHolder = makeAction('UPDATE_HOLDER');
+
+export const updateWapper = makeAction('UPDATE_WAPPER');

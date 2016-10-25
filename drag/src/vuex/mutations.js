@@ -1,12 +1,7 @@
 /**
  * state
  *
- * layout : [{
- *   x: 0,
- *   y: 0,
- *   w: 1,
- *   h: 1,
- * }]
+ * layout : [{ x: 0, y: 0, w: 1, h: 1 }...]
  */
 export const state = {
   dragable: true,
@@ -35,6 +30,10 @@ export const state = {
     // { x: 0, y: 12, w: 2, h: 3 },
     // { x: 6, y: 11, w: 2, h: 2 },
   ],
+  wapper: {
+    width: 0,
+    height: 0,
+  },
 };
 
 export const mutations = {
@@ -60,5 +59,9 @@ export const mutations = {
 
   CHANGE_STATUS(state, { status }) {
     state.isDragging = status;
+  },
+
+  UPDATE_WAPPER(state, { wapper }) {
+    state.wapper = wapper;
   },
 };
