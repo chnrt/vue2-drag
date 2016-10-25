@@ -30,10 +30,7 @@ export const state = {
     // { x: 0, y: 12, w: 2, h: 3 },
     // { x: 6, y: 11, w: 2, h: 2 },
   ],
-  wapper: {
-    width: 0,
-    height: 0,
-  },
+  wapperHeight: 600,
 };
 
 export const mutations = {
@@ -61,7 +58,7 @@ export const mutations = {
     state.isDragging = status;
   },
 
-  UPDATE_WAPPER(state, { wapper }) {
-    state.wapper = wapper;
+  UPDATE_WAPPER(state, { height }) {
+    state.wapperHeight = height;
   },
 };
