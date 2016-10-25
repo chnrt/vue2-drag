@@ -192,7 +192,8 @@ export default {
         const w = Math.max(0, Math.round(this.w + (gw / this.colWidth)));
         const h = Math.max(0, Math.round(this.h + (gh / this.rowHeight)));
 
-        const holder = layouts[this.index] = { x: this.x, y: this.y, w, h };
+        const holder = layouts[this.index] =
+          { x: this.x, y: this.y, w, h, i: layouts[this.index].i };
         compact(layouts, true);
 
         layouts[this.index] = {
