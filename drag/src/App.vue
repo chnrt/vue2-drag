@@ -56,6 +56,8 @@ import GridLayout from 'components/GridLayout';
 import GridItem from 'components/GridItem';
 import TestContent from 'components/TestContent';
 
+import { compact } from './api/utils';
+
 export default {
   name: 'app',
 
@@ -90,10 +92,15 @@ export default {
       this.addEL({
         layout: { x: 0, y, w: Math.min(2, index), h: Math.max(3, index), i: index },
       });
+
+      const layouts = [].concat(this.layouts);
+      compact(layouts, true);
+      this.updateAll({ layouts });
     },
 
     ...mapActions([
       'addEL',
+      'updateAll',
     ]),
   },
 };

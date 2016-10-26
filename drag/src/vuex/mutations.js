@@ -38,8 +38,8 @@ export const mutations = {
     state.layouts.push(layout);
   },
 
-  DELETE_EL(state, { layout }) {
-    state.layouts.splice(state.layouts.indexOf(layout), 1);
+  DELETE_EL(state, { index }) {
+    state.layouts.splice(index, 1);
   },
 
   UPDATE_LAYOUT(state, { index, layout }) {
