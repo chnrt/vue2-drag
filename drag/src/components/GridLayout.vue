@@ -25,15 +25,23 @@ export default {
     GridHolder,
   },
 
+  props: {
+    minHeight: {
+      type: Number,
+      default: 600,
+    },
+  },
+
   computed: {
     mergedStyle() {
       return {
-
+        height: `${Math.max(this.height, this.minHeight)}px`,
       };
     },
 
     ...mapGetters({
       holder: 'getHolder',
+      height: 'getWapperHeight',
       isDragging: 'getDragStatus',
     }),
   },

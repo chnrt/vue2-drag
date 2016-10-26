@@ -20,7 +20,7 @@
 /* eslint-disable no-mixed-operators */
 import interact from 'interact.js';
 import { mapGetters, mapActions } from 'vuex';
-import { compact, moveElement } from '../api/utils';
+import { compact, moveElement, getMax } from '../api/utils';
 
 export default {
   name: 'grid-item',
@@ -147,6 +147,10 @@ export default {
       .on('dragend', (event) => {
         this.dragEnd(event);
       });
+
+    this.$nextTick(() => {
+      this.resetWapper();
+    });
   },
 
   methods: {
@@ -186,6 +190,8 @@ export default {
           i: this.layouts[this.index].i,
         },
       });
+
+      this.resetWapper();
     },
 
     resizeStart(e) {
@@ -211,8 +217,8 @@ export default {
         layouts[this.index] = {
           x: this.x,
           y: this.y,
-          w: Math.max(0, this.w + (gw / this.colWidth)),
-          h: Math.max(0, this.h + (gh / this.rowHeight)),
+          w: Math.max(1, this.w + (gw / this.colWidth)),
+          h: Math.max(1, this.h + (gh / this.rowHeight)),
           i: layouts[this.index].i,
         };
 
@@ -231,6 +237,7 @@ export default {
         });
 
         this.updateAll({ layouts });
+        this.resetWapper();
       }
     },
 
@@ -280,6 +287,7 @@ export default {
         };
 
         this.updateAll({ layouts: newLayouts });
+        this.resetWapper();
       }
     },
 
@@ -299,10 +307,18 @@ export default {
       return { x, y };
     },
 
+    resetWapper() {
+      const max = getMax(this.layouts);
+      const height = max * (this.rowHeight + this.margin[1]) + this.margin[1];
+
+      this.updateWapper({ height });
+    },
+
     ...mapActions([
       'changeStatus',
       'updateHolder',
       'updateLayout',
+      'updateWapper',
       'updateAll',
     ]),
   },

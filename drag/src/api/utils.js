@@ -183,3 +183,18 @@ export function compact(layout, verticalCompact) {
 
   return out;
 }
+
+/**
+ * 获取当前layout最高点值
+ * @param  {[type]} layout [description]
+ * @return {[type]}        [description]
+ */
+export const getMax = (layouts) => {
+  let max = 0;
+
+  layouts.forEach((layout) => {
+    max = Math.max(layout.y + layout.h, max);
+  });
+
+  return max;
+};
