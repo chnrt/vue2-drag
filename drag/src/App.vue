@@ -36,7 +36,7 @@
               :w="item.w"
               :h="item.h">
 
-              <test-content :content="item.i"></test-content>
+              <classbrand></classbrand>
 
             </grid-item>
           </template>
@@ -55,6 +55,7 @@ import { mapGetters, mapActions } from 'vuex';
 import GridLayout from 'components/GridLayout';
 import GridItem from 'components/GridItem';
 import TestContent from 'components/TestContent';
+import Classbrand from 'components/Classbrand';
 
 import { compact } from './api/utils';
 
@@ -65,6 +66,7 @@ export default {
     GridLayout,
     GridItem,
     TestContent,
+    Classbrand,
   },
 
   data() {
