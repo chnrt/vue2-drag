@@ -1,16 +1,40 @@
 <template>
 <div class="module-wapper">
-  <iframe :src="ifsrc" frameborder="0"></iframe>
+  <iframe :src="srchash" frameborder="0"></iframe>
   <div class="module-mask"></div>
 </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      ifsrc: 'http://manager.i3618.com.cn/classbrand-web/pages/classbrandBase.jsp',
-    };
+  name: 'classbrand',
+
+  props: {
+    ifsrc: {
+      type: String,
+      default: 'http://manager.i3618.com.cn/classbrand-web/pages/classbrandBase.jsp',
+    },
+
+    url: {
+      type: String,
+      default: 'js/weather/weather',
+    },
+
+    cls: {
+      type: String,
+      default: 'classbrand-base',
+    },
+
+    fontSize: {
+      type: Number,
+      default: 28,
+    },
+  },
+
+  computed: {
+    srchash() {
+      return `${this.ifsrc}#${this.fontSize}&${this.cls}&${this.url}`;
+    },
   },
 };
 </script>
