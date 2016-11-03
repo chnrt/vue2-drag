@@ -1,8 +1,7 @@
 <template>
 <div
   class="vue-grid-layout"
-  :style="mergedStyle"
-  @mouseup="up">
+  :style="mergedStyle">
 
   <grid-holder
     v-if="isDragging"
@@ -28,7 +27,12 @@ export default {
   props: {
     minHeight: {
       type: Number,
-      default: 600,
+      default: 540,
+    },
+
+    bgColor: {
+      type: String,
+      default: '#fcfcfc',
     },
   },
 
@@ -36,6 +40,7 @@ export default {
     mergedStyle() {
       return {
         height: `${Math.max(this.height, this.minHeight)}px`,
+        'background-color': this.bgColor,
       };
     },
 
@@ -47,10 +52,6 @@ export default {
   },
 
   methods: {
-    up() {
-      this.changeStatus({ status: false });
-    },
-
     ...mapActions([
       'changeStatus',
       'updateHolder',
@@ -64,6 +65,5 @@ export default {
   background-color: #e0e0e0;
   position: relative;
   transition: height 200ms ease;
-  height: 600px;
 }
 </style>

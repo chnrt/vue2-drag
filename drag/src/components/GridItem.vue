@@ -51,26 +51,28 @@ export default {
       type: Number,
       required: true,
     },
+    cols: {
+      type: Number,
+      default: 4,
+    },
     containerWidth: {
       type: Number,
-      default: 100,
+      default: 960,
     },
     rowHeight: {
       type: Number,
-      default: 30,
+      default: 70,
     },
     margin: {
       type: Array,
       default() {
-        return [10, 10];
+        return [5, 5];
       },
     },
   },
 
   data() {
     return {
-      cols: 1,
-      maxRows: 999,
       isResizable: true,
 
       dragOffset: {},
@@ -105,6 +107,13 @@ export default {
       return h === Infinity
           ? h
           : Math.round(this.rowHeight * h + Math.max(0, h - 1) * this.margin[1]);
+    },
+
+    maxX() {
+      return this.cols - this.w;
+    },
+    maxW() {
+      return this.cols - this.x;
     },
 
     style() {
@@ -192,9 +201,10 @@ export default {
           y: this.holder.y,
           w: this.holder.w,
           h: this.holder.h,
-          i: this.layouts[this.index].i,
+          data: this.layouts[this.index].data,
         },
       });
+      this.changeStatus({ status: false });
 
       this.resetWapper();
     },
@@ -212,19 +222,20 @@ export default {
         this.dragOffset.cy = e.clientY;
 
         const layouts = [].concat(this.layouts);
-        const w = Math.max(1, Math.round(this.w + (gw / this.colWidth)));
+        const w = Math.min(this.maxW,
+          Math.max(1, Math.round(this.w + (gw / this.colWidth))));
         const h = Math.max(1, Math.round(this.h + (gh / this.rowHeight)));
 
         const holder = layouts[this.index] =
-          { x: this.x, y: this.y, w, h, i: layouts[this.index].i };
+          { x: this.x, y: this.y, w, h, data: layouts[this.index].data };
         compact(layouts, true);
 
         layouts[this.index] = {
           x: this.x,
           y: this.y,
-          w: Math.max(1, this.w + (gw / this.colWidth)),
+          w: Math.min(this.maxW, Math.max(1, this.w + (gw / this.colWidth))),
           h: Math.max(1, this.h + (gh / this.rowHeight)),
-          i: layouts[this.index].i,
+          data: layouts[this.index].data,
         };
 
         this.updateHolder({
@@ -288,7 +299,7 @@ export default {
           y: (top - this.margin[1]) / (this.rowHeight + this.margin[1]),
           w: this.w,
           h: this.h,
-          i: newLayouts[this.index].i,
+          data: newLayouts[this.index].data,
         };
 
         this.updateAll({ layouts: newLayouts });
@@ -306,7 +317,7 @@ export default {
       let y = Math.round((top - this.margin[1]) / (this.rowHeight + this.margin[1]));
 
       // Capping
-      x = Math.max(x, 0);
+      x = Math.min(this.maxX, Math.max(x, 0));
       y = Math.max(y, 0);
 
       return { x, y };

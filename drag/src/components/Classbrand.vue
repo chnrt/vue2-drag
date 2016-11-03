@@ -10,14 +10,19 @@ export default {
   name: 'classbrand',
 
   props: {
-    ifsrc: {
-      type: String,
-      default: 'http://manager.i3618.com.cn/classbrand-web/pages/classbrandBase.jsp',
+    w: {
+      type: Number,
+      required: true,
     },
 
-    url: {
+    h: {
+      type: Number,
+      required: true,
+    },
+
+    ifsrc: {
       type: String,
-      default: 'js/weather/weather',
+      default: 'http://manager.i3618.com.cn/classbrand-web/pages/module.jsp',
     },
 
     cls: {
@@ -27,13 +32,13 @@ export default {
 
     fontSize: {
       type: Number,
-      default: 28,
+      default: 20,
     },
   },
 
   computed: {
     srchash() {
-      return `${this.ifsrc}#${this.fontSize}&${this.cls}&${this.url}`;
+      return `${this.ifsrc}#${this.fontSize}&${this.cls}`;
     },
   },
 };
