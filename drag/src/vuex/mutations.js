@@ -17,7 +17,18 @@ export const state = {
     { x: 2, y: 0, w: 1, h: 20, data: { cls: 'classbrand-person' } },
     { x: 0, y: 0, w: 2, h: 20, data: { cls: 'classbrand-class' } },
   ],
+  layoutsRect: {},
   wapperHeight: 540,
+
+  modules: [{
+    left: 0,
+    top: 0,
+    moving: false,
+    in: false,
+    data: { name: '日期和天气', cls: 'classbrand-base', icon: 'icon-tianqi' },
+  }],
+  movingModule: null, // module index
+  moduleMove: false,
 };
 
 export const mutations = {
@@ -47,5 +58,24 @@ export const mutations = {
 
   UPDATE_WAPPER(state, { height }) {
     state.wapperHeight = height;
+  },
+
+  UPDATE_LAYOUTS_RECT(state, { rect }) {
+    state.layoutsRect = rect;
+  },
+
+  MOVE_MODULE(state, { index, module }) {
+    Object.keys(module).forEach((key) => {
+      state.modules[index][key] = module[key];
+
+      if (key === 'moving') {
+        state.moduleMove = module[key];
+        state.movingModule = index;
+      }
+    });
+  },
+
+  REMOVE_MODULE(state, { index }) {
+    state.modules.splice(index, 1);
   },
 };

@@ -12,3 +12,7 @@ export const changeStatus = makeAction('CHANGE_STATUS');
 export const updateHolder = makeAction('UPDATE_HOLDER');
 
 export const updateWapper = makeAction('UPDATE_WAPPER');
+export const updateLayoutsRect = makeAction('UPDATE_LAYOUTS_RECT');
+
+export const moveModule = makeAction('MOVE_MODULE');
+export const removeModule = makeAction('REMOVE_MODULE');

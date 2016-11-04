@@ -5,22 +5,36 @@
   </edit-header>
 
   <edit-modules>
-    <template v-for="item in 10">
+    <template v-for="(item, index) in modules">
       <edit-module
-        icon="icon-iconfontzuoye"
-        mname="作业">
+        :key="item.data.cls"
+        :index="index"
+        :in="item.in"
+        :moving="item.moving"
+        :left="item.left"
+        :top="item.top"
+        :icon="item.data.icon"
+        :mname="item.data.name"
+
+        :w="moduleW"
+        :h="moduleH"
+        :margin="margin"
+        :col="colWidth"
+        :row="rowHeight"
+        :width="moduleWidth"
+        :height="moduleHeight">
       </edit-module>
     </template>
   </edit-modules>
 
   <edit-viewport>
-    <grid-layout :minHeight="540" bgColor="#172044">
+    <grid-layout :minHeight="vHeight" bgColor="#172044">
       <template v-for="(item, index) in layouts">
 
         <grid-item
           :key="item.data.cls"
-          :containerWidth="960"
-          :rowHeight="5.7"
+          :containerWidth="vWidth"
+          :rowHeight="rowHeight"
           :index="index"
           :x="item.x"
           :y="item.y"
@@ -66,8 +80,38 @@ export default {
     Classbrand,
   },
 
+  data() {
+    return {
+      vWidth: 960,
+      vHeight: 540,
+      margin: 5,
+      maxX: 4,
+      maxY: 50,
+
+      moduleW: 1,
+      moduleH: 20,
+    };
+  },
+
   computed: {
+    colWidth() {
+      return (this.vWidth - (this.margin * (this.maxX + 1))) / this.maxX;
+    },
+
+    rowHeight() {
+      return (this.vHeight - (this.margin * (this.maxY + 1))) / this.maxY;
+    },
+
+    moduleWidth() {
+      return (this.colWidth * this.moduleW) + (this.margin * (this.moduleW - 1));
+    },
+
+    moduleHeight() {
+      return (this.rowHeight * this.moduleH) + (this.margin * (this.moduleH - 1));
+    },
+
     ...mapGetters({
+      modules: 'getModules',
       holder: 'getHolder',
       layouts: 'getLayouts',
     }),
@@ -92,5 +136,6 @@ export default {
   background-color: #fff;
   min-height: 600px;
   min-width: 1200px;
+  overflow: hidden;
 }
 </style>

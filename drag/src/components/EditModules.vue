@@ -3,15 +3,29 @@
   <div class="edit-modules-title">
     <i class="iconfont icon-qbyy"></i>&nbsp;模块列表
   </div>
-  <div class="edit-modules-btns">
+  <div class="edit-modules-btns" :class="cls">
     <slot></slot>
   </div>
 </div>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex';
 
+export default {
+  name: 'edit-modules',
+
+  computed: {
+    cls() {
+      return {
+        'module-ismoving': this.moving,
+      };
+    },
+
+    ...mapGetters({
+      moving: 'getModuleStatus',
+    }),
+  },
 };
 </script>
 
@@ -42,6 +56,9 @@ export default {
   bottom: 0;
   width: 100%;
   overflow-y: auto;
+}
+.edit-modules-btns.module-ismoving {
+  overflow: visible;
 }
 .edit-modules-btns::-webkit-scrollbar {
   width: 0;

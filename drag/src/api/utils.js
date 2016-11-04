@@ -128,3 +128,18 @@ export const getMax = (layouts) => {
 
   return max;
 };
+
+export const getElementClientRect = (element) => {
+  const clientRect = (element instanceof SVGElement // eslint-disable-line
+    ? element.getBoundingClientRect()
+    : element.getClientRects()[0]);
+
+  return clientRect && {
+    left: clientRect.left,
+    right: clientRect.right,
+    top: clientRect.top,
+    bottom: clientRect.bottom,
+    width: clientRect.width || clientRect.right - clientRect.left,
+    height: clientRect.height || clientRect.bottom - clientRect.top,
+  };
+};
