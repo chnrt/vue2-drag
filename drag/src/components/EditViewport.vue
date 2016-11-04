@@ -67,7 +67,7 @@ export default {
   right: 0;
   margin: auto;
   border: 1px solid #e5e5e5;
-  box-shadow: 5px 5px 30px #ddd;
+  box-shadow: 5px 5px 30px #444;
   overflow-y: auto;
   overflow-x: hidden;
 }

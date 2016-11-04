@@ -278,7 +278,7 @@ export default {
   position: absolute;
   border: 1px dashed #cbcbcb;
   z-index: 1;
-  box-shadow: 1px 1px 5px #ddd;
+  box-shadow: 5px 5px 20px #444;;
 }
 .edit-module.ismove-right .icon-jiahao,
 .edit-module.ismove-left .icon-jiahao {

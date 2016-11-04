@@ -221,11 +221,12 @@ export default {
         this.dragOffset.cx = e.clientX;
         this.dragOffset.cy = e.clientY;
 
-        const layouts = [].concat(this.layouts);
-        const w = Math.min(this.maxW,
-          Math.max(1, Math.round(this.w + (gw / this.colWidth))));
-        const h = Math.max(1, Math.round(this.h + (gh / this.rowHeight)));
+        const w = Math.min(this.maxW, Math.max(1, Math.round(
+          (this.width + gw - this.margin[0]) / (this.colWidth + this.margin[0]))));
+        const h = Math.max(1, Math.round(
+          (this.height + gh - this.margin[1]) / (this.rowHeight + this.margin[1])));
 
+        const layouts = [].concat(this.layouts);
         const holder = layouts[this.index] =
           { x: this.x, y: this.y, w, h, data: layouts[this.index].data };
         compact(layouts, true);
@@ -369,7 +370,7 @@ export default {
   -webkit-transition: box-shadow 100ms ease;
   color: white;
   background: #28f;
-  box-shadow: 1px 1px 5px #444;
+  box-shadow: 1px 1px 3px #444;
   /* cursor: move; */
 }
 .vue-grid-item.cssTransforms {
@@ -382,7 +383,7 @@ export default {
 
 .vue-grid-item.vue-draggable-dragging {
   /*transition:none;*/
-  box-shadow: 10px 10px 40px #444;
+  box-shadow: 5px 5px 20px #444;
   z-index: 3;
 }
 
