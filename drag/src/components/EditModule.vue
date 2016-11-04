@@ -231,6 +231,11 @@ export default {
           layout: { x, y, w, h, data },
         });
         this.removeModule({ index: this.index });
+
+        // 未知原因BUG：如果同步执行，v-for会重新渲染。改为异步则没问题
+        setTimeout(() => {
+          this.changeStatus({ status: false });
+        }, 0);
       }
     },
 
@@ -270,6 +275,7 @@ export default {
 }
 .edit-module.ismove-left,
 .edit-module.ismove-right {
+  position: absolute;
   border: 1px dashed #cbcbcb;
   z-index: 1;
   box-shadow: 1px 1px 5px #ddd;

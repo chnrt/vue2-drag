@@ -332,11 +332,21 @@ export default {
 
     delItem() {
       const layouts = [].concat(this.layouts);
+      const data = layouts[this.index].data;
       layouts.splice(this.index, 1);
       compact(layouts, true);
 
       this.updateAll({ layouts });
       this.resetWapper();
+
+      // add module
+      this.addModule({ module: {
+        data,
+        left: 0,
+        top: 0,
+        moving: false,
+        in: false,
+      } });
     },
 
     ...mapActions([
@@ -346,6 +356,7 @@ export default {
       'updateWapper',
       'updateAll',
       'deleteEL',
+      'addModule',
     ]),
   },
 };
