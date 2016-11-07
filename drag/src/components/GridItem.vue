@@ -221,10 +221,10 @@ export default {
         this.dragOffset.cx = e.clientX;
         this.dragOffset.cy = e.clientY;
 
-        const w = Math.min(this.maxW, Math.max(1, Math.round(
-          (this.width + gw - this.margin[0]) / (this.colWidth + this.margin[0]))));
-        const h = Math.max(1, Math.round(
-          (this.height + gh - this.margin[1]) / (this.rowHeight + this.margin[1])));
+        const realW = (this.width + gw + this.margin[0]) / (this.colWidth + this.margin[0]);
+        const realH = (this.height + gh + this.margin[1]) / (this.rowHeight + this.margin[1]);
+        const w = Math.min(this.maxW, Math.max(1, Math.round(realW)));
+        const h = Math.max(1, Math.round(realH));
 
         const layouts = [].concat(this.layouts);
         const holder = layouts[this.index] =
@@ -234,8 +234,8 @@ export default {
         layouts[this.index] = {
           x: this.x,
           y: this.y,
-          w: Math.min(this.maxW, Math.max(1, this.w + (gw / this.colWidth))),
-          h: Math.max(1, this.h + (gh / this.rowHeight)),
+          w: Math.min(this.maxW, Math.max(1, realW)),
+          h: Math.max(1, realH),
           data: layouts[this.index].data,
         };
 
