@@ -108,13 +108,26 @@ export default {
     }),
   },
 
+  mounted() {
+    this.loadData();
+  },
+
   methods: {
+    loadData() {
+      this.$http
+        .get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId')
+        .then((response) => {
+          console.log('parsed json', response);
+        }, (response) => {
+          console.log('parsed json', response);
+        });
+    },
+
     save() {
       console.log(this.layouts);
     },
 
     ...mapActions([
-      'addEL',
       'updateAll',
     ]),
   },

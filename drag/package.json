@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "element-ui": "^1.0.0-rc.6",
+    "es6-promise": "^4.0.5",
     "interact.js": "^1.2.6",
     "vue": "^2.0.1",
+    "vue-resource": "^1.0.3",
     "vue-router": "^2.0.0",
     "vuex": "^2.0.0"
   },

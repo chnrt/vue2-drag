@@ -2,11 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
+
 import App from './App';
 import store from './vuex/store';
 import ClassbrandEdit from './views/ClassbrandEdit';
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
 
 const routes = [
   { path: '/classbrand', component: ClassbrandEdit },
