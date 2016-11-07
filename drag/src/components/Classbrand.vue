@@ -53,7 +53,10 @@ export default {
   bottom: 0;
   left: 0;
 }
-
+.module-mask {
+  background-color: #000;
+  opacity: 0.1;
+}
 iframe {
   width: 100%;
   height: 100%;

@@ -11,6 +11,7 @@
   <span
     @click="delItem"
     class="vue-delete-handle">
+    <i class="iconfont icon-chahao"></i>
   </span>
 
   <span
@@ -407,10 +408,18 @@ export default {
   height: 20px;
   top: 0;
   right: 0;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACCUlEQVRYR81Xi1XCQBCcqUCtQKxArECsQEvADqAC7UA6UDqwA6EC6ECtQK1gfRM3Mbn8LgGM+x6Pl2QvO5md3dsjBjYOHB+dAJjZGMA1gAmAYwC6lm0BfAJ4BrAmqesoiwJgZjcAHgCceBAFUsA3jzJyQPLT7wPAnKT8Gq0RgJnpxY8AzgDck3xqe6Gem9lU/gBeAdySTIGWltcCcLpfACxJzmIChz5mtgAgMJO6tFQC8OArALPYr64D6GyIxYsqECUATvvGcxhFeRs7DkJsjMN0VAHQl2/70t7AhACck7zK+xQAuNoXJCW+vZuZSYxTkvrIxEIAcohWe1eEnoo7kqqqIoBUeCTVYA5mZqb+kVVFxoCZqW5HJFU2BzMzk7ClMWniNwVmprwo/63daxd0rjOVt9p5AYD6tx5kAtklUEM1KLB0VgJgarlVbdPZ0fNOFpacFrvWNiST9Oc10AagU/Dk5f6V+YVNAAZPweAiHLwMNd2sBmtErtC/aMUqwWyv+V+bkbNwyO1Y80DSgEqbUXrDB5K0JPc9kGiv0WZUDyDfrXyg3AlE55Esx0RSFZqKSc47t8GftttvKA3SIQZOfQNZxgBJBw8A7zonhLS3piAMko5qAI6Cg8mX++q+Bpn0YKL7hdGrDnjUyShIi1SsQLJL/1/7v2YJNbP9Hs1iaO/r04mBvkGa1n0D9s0OMCn/z/MAAAAASUVORK5CYII=);
-  background-size: 80%;
-  background-position: center;
-  background-repeat: no-repeat;
   cursor: pointer;
+}
+.vue-grid-item > .vue-delete-handle .iconfont {
+  border: 1px solid #ccc;
+  color: #a1a1a1;
+}
+.vue-grid-item > .vue-delete-handle .iconfont:hover {
+  border: 1px solid #d1d1d1;
+  color: #aaaaaa;
+}
+.vue-grid-item > .vue-delete-handle .iconfont:active {
+  border: 1px solid #b8b8b8;
+  color: #919191;
 }
 </style>

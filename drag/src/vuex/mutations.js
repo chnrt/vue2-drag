@@ -1,7 +1,7 @@
 /**
  * state
  *
- * layout : [{ x: 0, y: 0, w: 1, h: 1 }...]
+ * layouts : [{ x: 0, y: 0, w: 1, h: 1 }...]
  */
 export const state = {
   dragable: true,
@@ -26,6 +26,8 @@ export const state = {
     moving: false,
     in: false,
     data: {
+      w: 1,
+      h: 17,
       name: '日期和天气',
       cls: 'classbrand-base',
       icon: 'icon-tianqi',
@@ -36,6 +38,8 @@ export const state = {
     moving: false,
     in: false,
     data: {
+      w: 2,
+      h: 20,
       name: '班级信息',
       cls: 'classbrand-class',
       icon: 'icon-xinxi',
@@ -46,6 +50,8 @@ export const state = {
     moving: false,
     in: false,
     data: {
+      w: 1,
+      h: 20,
       name: '个人信息',
       cls: 'classbrand-person',
       icon: 'icon-gerenxinxi',
@@ -56,6 +62,8 @@ export const state = {
     moving: false,
     in: false,
     data: {
+      w: 1,
+      h: 13,
       name: '课程表',
       cls: 'classbrand-timetable',
       icon: 'icon-kechengbiao',
@@ -66,6 +74,8 @@ export const state = {
     moving: false,
     in: false,
     data: {
+      w: 1,
+      h: 20,
       name: '作业',
       cls: 'classbrand-homework',
       icon: 'icon-iconfontzuoye',

@@ -6,7 +6,7 @@
     :class="icon"
     :style="inStyle">
   </i>
-  <span class="edit-module-name">{{ mname }}</span>
+  <span class="edit-module-name" :style="fontStyle">{{ mname }}</span>
 
   <i class="iconfont icon-jiahao"></i>
 </div>
@@ -44,8 +44,8 @@ export default {
     col: Number,
     row: Number,
     margin: Number,
-    width: Number,
-    height: Number,
+
+    maxX: Number,
   },
 
   data() {
@@ -61,6 +61,14 @@ export default {
   },
 
   computed: {
+    width() {
+      return (this.col * this.w) + (this.margin * (this.w - 1));
+    },
+
+    height() {
+      return (this.row * this.h) + (this.margin * (this.h - 1));
+    },
+
     rectLeft() {
       return this.rect.left + this.left;
     },
@@ -115,6 +123,15 @@ export default {
       }
 
       return style;
+    },
+
+    fontStyle() {
+      if (!this.in) return {};
+
+      return {
+        fontSize: `${this.height / 10}px`,
+        lineHeight: `${this.height / 2}px`,
+      };
     },
 
     module() {
@@ -182,7 +199,7 @@ export default {
         let x = Math.round(this.x);
         let y = Math.round(this.y);
 
-        x = Math.min(Math.max(x, 0), 3); // TODO 3暂时写死
+        x = Math.min(Math.max(x, 0), this.maxX - 1);
         y = Math.max(y, 0);
 
         const layouts = [].concat(this.layouts);

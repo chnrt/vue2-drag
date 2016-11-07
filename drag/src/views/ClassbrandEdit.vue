@@ -16,13 +16,12 @@
         :icon="item.data.icon"
         :mname="item.data.name"
 
-        :w="moduleW"
-        :h="moduleH"
+        :maxX="maxX"
+        :w="item.data.w"
+        :h="item.data.h"
         :margin="margin"
         :col="colWidth"
-        :row="rowHeight"
-        :width="moduleWidth"
-        :height="moduleHeight">
+        :row="rowHeight">
       </edit-module>
     </template>
   </edit-modules>
@@ -100,14 +99,6 @@ export default {
 
     rowHeight() {
       return (this.vHeight - (this.margin * (this.maxY + 1))) / this.maxY;
-    },
-
-    moduleWidth() {
-      return (this.colWidth * this.moduleW) + (this.margin * (this.moduleW - 1));
-    },
-
-    moduleHeight() {
-      return (this.rowHeight * this.moduleH) + (this.margin * (this.moduleH - 1));
     },
 
     ...mapGetters({
