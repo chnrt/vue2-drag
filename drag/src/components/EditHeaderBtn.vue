@@ -1,5 +1,5 @@
 <template>
-<div class="edit-header-btn">{{ bname }}</div>
+<div class="edit-header-btn" @click="emitClick">{{ bname }}</div>
 </template>
 
 <script>
@@ -8,6 +8,12 @@ export default {
     bname: {
       type: String,
       required: true,
+    },
+  },
+
+  methods: {
+    emitClick() {
+      this.$emit('clickEvt');
     },
   },
 };

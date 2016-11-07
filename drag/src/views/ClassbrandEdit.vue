@@ -1,7 +1,7 @@
 <template>
 <div class="edit-page">
   <edit-header title="模块设置 - 智慧班级牌">
-    <edit-header-btn bname="保存"></edit-header-btn>
+    <edit-header-btn bname="保存" @clickEvt="save"></edit-header-btn>
   </edit-header>
 
   <edit-modules>
@@ -118,6 +118,10 @@ export default {
   },
 
   methods: {
+    save() {
+      console.log(this.layouts);
+    },
+
     ...mapActions([
       'addEL',
       'updateAll',
