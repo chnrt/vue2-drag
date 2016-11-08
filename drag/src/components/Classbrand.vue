@@ -104,13 +104,16 @@ iframe {
     opacity: 0;
   }
 }
-
+.module-loading {
+  background-color: #fcfcfc;
+}
 .ivu-spin-dot {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   display: block;
   border-radius: 50%;
   background-color: #0099e5;

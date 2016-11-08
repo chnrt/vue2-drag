@@ -60,6 +60,10 @@ export default {
       type: Number,
       default: 960,
     },
+    containerHeight: {
+      type: Number,
+      default: 960,
+    },
     rowHeight: {
       type: Number,
       default: 70,
@@ -69,6 +73,11 @@ export default {
       default() {
         return [5, 5];
       },
+    },
+
+    spliceScreen: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -327,7 +336,11 @@ export default {
 
     resetWapper() {
       const max = getMax(this.layouts);
-      const height = max * (this.rowHeight + this.margin[1]) + this.margin[1];
+      let height = max * (this.rowHeight + this.margin[1]) + this.margin[1];
+
+      if (this.spliceScreen) {
+        height = Math.ceil(height / this.containerHeight) * this.containerHeight;
+      }
 
       this.updateWapper({ height });
     },

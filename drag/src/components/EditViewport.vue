@@ -2,6 +2,13 @@
 <div class="edit-viewport">
   <div class="edit-viewport-screen" :style="mergeStyle">
     <slot></slot>
+
+    <template v-for="(item, index) in screenNum" v-if="split">
+      <div class="edit-split-screen"
+        :style="[splitStyle, { top: height * index + 'px' }]">
+      </div>
+    </template>
+
   </div>
 </div>
 </template>
@@ -13,6 +20,11 @@ export default {
   name: 'edit-viewport',
 
   props: {
+    split: {
+      type: Boolean,
+      default: false,
+    },
+
     width: {
       type: Number,
       default: 960,
@@ -25,6 +37,10 @@ export default {
   },
 
   computed: {
+    screenNum() {
+      return Math.ceil(this.contentH / this.height);
+    },
+
     mergeStyle() {
       let width = this.width;
       let translate = 'translateX(0px)';
@@ -41,6 +57,12 @@ export default {
         MozTransform: translate,
         msTransform: translate,
         OTransform: translate,
+      };
+    },
+
+    splitStyle() {
+      return {
+        height: `${this.height}px`,
       };
     },
 
@@ -71,5 +93,14 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
+.edit-split-screen {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #172044;
+}
+.edit-split-screen:nth-child(odd) {
+  background-color: #00ACC2;
+}
 </style>

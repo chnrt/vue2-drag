@@ -26,13 +26,15 @@
     </template>
   </edit-modules>
 
-  <edit-viewport>
-    <grid-layout :minHeight="vHeight" bgColor="#172044">
+  <edit-viewport :split="true">
+    <grid-layout :minHeight="vHeight" bgColor="inherit">
       <template v-for="(item, index) in layouts">
 
         <grid-item
           :key="item.data.cls"
+          :spliceScreen="true"
           :containerWidth="vWidth"
+          :containerHeight="vHeight"
           :rowHeight="rowHeight"
           :index="index"
           :x="item.x"
