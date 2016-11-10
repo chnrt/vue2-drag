@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { Promise } from 'es6-promise';
 import { mapGetters, mapActions } from 'vuex';
 
 import EditHeader from 'components/EditHeader';
@@ -116,21 +117,89 @@ export default {
 
   methods: {
     loadData() {
-      this.$http
-        .get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId')
-        .then((response) => {
-          console.log('parsed json', response);
-        }, (response) => {
-          console.log('parsed json', response);
+      Promise.all([
+        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false'),
+        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false&configType=setting'),
+      ]).then((data) => {
+        this.initConfig(data);
+      }, (error) => {
+        console.log(error);
+      });
+    },
+
+    initConfig([currSetting, allModules]) {
+      const { module_config } = currSetting.body.resultBean.configMap;
+      const { module_setting_config } = allModules.body.resultBean.configMap;
+
+      const clsArr = [];
+      const layouts = [];
+      const modules = [];
+      const getModuleByCls = this.getModuleByCls();
+
+      module_config.forEach((item) => {
+        const cls = item.cls;
+        const icon = item.icon || getModuleByCls(module_setting_config, cls).icon;
+        const name = item.name || getModuleByCls(module_setting_config, cls).name;
+
+        clsArr.push(cls);
+        layouts.push({
+          x: item.x || item.col - 1,
+          y: item.y || item.row - 1,
+          w: item.w || item.size_x,
+          h: item.h || item.size_y,
+          data: {
+            cls,
+            icon,
+            name,
+            w: item.w || item.size_x,
+            h: item.h || item.size_y,
+          },
         });
+      });
+
+      module_setting_config.forEach((item) => {
+        if (clsArr.indexOf(item.cls) < 0) {
+          modules.push({
+            left: 0,
+            top: 0,
+            moving: false,
+            in: false,
+            data: item,
+          });
+        }
+      });
+
+      this.updateAll({ layouts });
+      this.updateModules({ modules });
+    },
+
+    getModuleByCls() {
+      const modulesByCls = {};
+      return (modules, cls) => {
+        if (modulesByCls[cls]) {
+          return modulesByCls[cls];
+        }
+
+        modules.forEach((item) => {
+          if (item.cls === cls) {
+            modulesByCls[cls] = item;
+            return false;
+          }
+          return true;
+        });
+
+        return modulesByCls[cls] || { icon: 'icon-qbyy', name: '未命名' };
+      };
     },
 
     save() {
-      console.log(this.layouts);
+      window.parent.postMessage(this.layouts, location.origin); // eslint-disable-line
     },
 
     ...mapActions([
       'updateAll',
+      'addAllModules',
+      'updateModules',
     ]),
   },
 };

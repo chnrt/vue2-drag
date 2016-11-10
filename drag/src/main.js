@@ -13,6 +13,7 @@ Vue.use(VueResource);
 
 const routes = [
   { path: '/classbrand', component: ClassbrandEdit },
+  { path: '*', redirect: '/classbrand' },
 ];
 
 const router = new VueRouter({

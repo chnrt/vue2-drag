@@ -20,67 +20,7 @@ export const state = {
   layoutsRect: {},
   wapperHeight: 540,
 
-  modules: [{
-    left: 0,
-    top: 0,
-    moving: false,
-    in: false,
-    data: {
-      w: 1,
-      h: 17,
-      name: '日期和天气',
-      cls: 'classbrand-base',
-      icon: 'icon-tianqi',
-    },
-  }, {
-    left: 0,
-    top: 0,
-    moving: false,
-    in: false,
-    data: {
-      w: 2,
-      h: 20,
-      name: '班级信息',
-      cls: 'classbrand-class',
-      icon: 'icon-xinxi',
-    },
-  }, {
-    left: 0,
-    top: 0,
-    moving: false,
-    in: false,
-    data: {
-      w: 1,
-      h: 20,
-      name: '个人信息',
-      cls: 'classbrand-person',
-      icon: 'icon-gerenxinxi',
-    },
-  }, {
-    left: 0,
-    top: 0,
-    moving: false,
-    in: false,
-    data: {
-      w: 1,
-      h: 13,
-      name: '课程表',
-      cls: 'classbrand-timetable',
-      icon: 'icon-kechengbiao',
-    },
-  }, {
-    left: 0,
-    top: 0,
-    moving: false,
-    in: false,
-    data: {
-      w: 1,
-      h: 20,
-      name: '作业',
-      cls: 'classbrand-homework',
-      icon: 'icon-iconfontzuoye',
-    },
-  }],
+  modules: [],
   movingModule: null, // module index
   moduleMove: false,
 };
@@ -131,5 +71,9 @@ export const mutations = {
 
   REMOVE_MODULE(state, { index }) {
     state.modules.splice(index, 1);
+  },
+
+  UPDATE_MODULES(state, { modules }) {
+    state.modules = modules;
   },
 };
