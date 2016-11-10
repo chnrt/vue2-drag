@@ -16,5 +16,4 @@ export const updateLayoutsRect = makeAction('UPDATE_LAYOUTS_RECT');
 export const moveModule = makeAction('MOVE_MODULE');
 export const addModule = makeAction('ADD_MODULE');
 export const removeModule = makeAction('REMOVE_MODULE');
-export const addAllModules = makeAction('ADD_ALL_MODULES');
 export const updateModules = makeAction('UPDATE_MODULES');

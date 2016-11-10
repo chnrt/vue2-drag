@@ -35,7 +35,7 @@ export const mutations = {
   },
 
   UPDATE_ALL(state, { layouts }) {
-    state.layouts = layouts;
+    state.layouts = [].concat(layouts);
   },
 
   UPDATE_HOLDER(state, { holder }) {
@@ -74,6 +74,6 @@ export const mutations = {
   },
 
   UPDATE_MODULES(state, { modules }) {
-    state.modules = modules;
+    state.modules = [].concat(modules);
   },
 };

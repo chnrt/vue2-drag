@@ -48,7 +48,8 @@ export default {
 
   computed: {
     srchash() {
-      return `${this.ifsrc}#${this.fontSize}&${this.cls}&${Math.round(this.w)}&${Math.round(this.h)}`;
+      /* eslint-disable */
+      return `${location.origin}/classbrand-web/pages/module.jsp#${this.fontSize}&${this.cls}&${Math.round(this.w)}&${Math.round(this.h)}`;
     },
   },
 

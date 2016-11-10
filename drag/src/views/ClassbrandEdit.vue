@@ -1,7 +1,9 @@
 <template>
 <div class="edit-page">
   <edit-header title="模块设置 - 智慧班级牌">
-    <edit-header-btn bname="保存" @clickEvt="save"></edit-header-btn>
+    <edit-header-btn bname="还原" :secondary="true" @clickEvt="restore"></edit-header-btn>
+    <edit-header-btn bname="默认配置" :secondary="true" @clickEvt="useDefault"></edit-header-btn>
+    <edit-header-btn bname="完成" @clickEvt="save"></edit-header-btn>
   </edit-header>
 
   <edit-modules>
@@ -92,6 +94,15 @@ export default {
 
       moduleW: 1,
       moduleH: 20,
+
+      originConfig: {
+        modules: [],
+        layouts: [],
+      },
+      defaultConfig: {
+        modules: [],
+        layouts: [],
+      },
     };
   },
 
@@ -120,6 +131,7 @@ export default {
       Promise.all([
         this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false'),
         this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false&configType=setting'),
+        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=true'),
       ]).then((data) => {
         this.initConfig(data);
       }, (error) => {
@@ -127,24 +139,32 @@ export default {
       });
     },
 
-    initConfig([currSetting, allModules]) {
+    initConfig([currSetting, allModules, defaultSet]) {
       const { module_config } = currSetting.body.resultBean.configMap;
       const { module_setting_config } = allModules.body.resultBean.configMap;
 
+      this.originConfig = this.getMnL(module_setting_config, module_config);
+      this.updateMnL(this.originConfig);
+
+      const dfConfig = defaultSet.body.resultBean.configMap.module_config;
+      this.defaultConfig = this.getMnL(module_setting_config, dfConfig);
+    },
+
+    getMnL(all, config) {
       const clsArr = [];
       const layouts = [];
       const modules = [];
       const getModuleByCls = this.getModuleByCls();
 
-      module_config.forEach((item) => {
+      config.forEach((item) => {
         const cls = item.cls;
-        const icon = item.icon || getModuleByCls(module_setting_config, cls).icon;
-        const name = item.name || getModuleByCls(module_setting_config, cls).name;
+        const icon = item.icon || getModuleByCls(all, cls).icon;
+        const name = item.name || getModuleByCls(all, cls).name;
 
         clsArr.push(cls);
         layouts.push({
-          x: item.x || item.col - 1,
-          y: item.y || item.row - 1,
+          x: isNaN(item.x) ? (item.col - 1) : item.x,
+          y: isNaN(item.y) ? (item.row - 1) : item.y,
           w: item.w || item.size_x,
           h: item.h || item.size_y,
           data: {
@@ -157,7 +177,7 @@ export default {
         });
       });
 
-      module_setting_config.forEach((item) => {
+      all.forEach((item) => {
         if (clsArr.indexOf(item.cls) < 0) {
           modules.push({
             left: 0,
@@ -169,8 +189,7 @@ export default {
         }
       });
 
-      this.updateAll({ layouts });
-      this.updateModules({ modules });
+      return { layouts, modules };
     },
 
     getModuleByCls() {
@@ -192,13 +211,36 @@ export default {
       };
     },
 
+    restore() {
+      this.updateMnL(this.originConfig);
+    },
+
+    useDefault() {
+      this.updateMnL(this.defaultConfig);
+    },
+
     save() {
       window.parent.postMessage(this.layouts, location.origin); // eslint-disable-line
     },
 
+    updateMnL({ modules, layouts }) {
+      const newModules = [];
+      const newLayouts = [];
+
+      modules.forEach((item) => {
+        newModules.push(Object.assign({}, item));
+      });
+
+      layouts.forEach((item) => {
+        newLayouts.push(Object.assign({}, item));
+      });
+
+      this.updateModules({ modules: newModules });
+      this.updateAll({ layouts: newLayouts });
+    },
+
     ...mapActions([
       'updateAll',
-      'addAllModules',
       'updateModules',
     ]),
   },
