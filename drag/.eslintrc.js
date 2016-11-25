@@ -29,6 +29,7 @@ module.exports = {
     'no-shadow': 0,
     'no-param-reassign': 0,
     'no-plusplus': 0,
-    'linebreak-style': 0
+    'linebreak-style': 0,
+    'no-undef': 0,
   }
 }

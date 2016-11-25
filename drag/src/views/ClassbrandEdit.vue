@@ -129,13 +129,13 @@ export default {
   methods: {
     loadData() {
       Promise.all([
-        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false'),
-        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false&configType=setting'),
-        this.$http.get('http://manager.i3618.com.cn/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=true'),
+        this.$http.get(`${location.origin}/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false`),
+        this.$http.get(`${location.origin}/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=false&configType=setting`),
+        this.$http.get(`${location.origin}/app/classbrand/moduleEdit/findConfigByOrgId?isDefault=true`),
       ]).then((data) => {
         this.initConfig(data);
       }, (error) => {
-        console.log(error);
+        console.log(error); // eslint-disable-line
       });
     },
 
